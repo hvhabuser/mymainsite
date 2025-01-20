@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>title</title>
+    <title>n1s_01</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
@@ -75,7 +75,8 @@
             width: 50%;
          }
          .list a:hover {
-            font-size: 1.2rem;
+            scale: 1.2;
+            text-shadow: 0 1px 20px #858585;
          }
          .tabs {
             display: flex;
@@ -111,7 +112,7 @@
             align-items: center;
             margin: auto;
             top: 50%;
-            margin-top: 15%;
+            margin-top: 10%;
             gap: 5px;
          }
          .slider {
@@ -224,7 +225,7 @@
     <header>
     <h2>💎</h2>
     <div class="list">
-        <a>Магазин</a>
+        <a href="shop.html">Магазин</a>
     </div> 
     <h2>💎</h2>
     </header>
@@ -268,77 +269,124 @@
         <a>Магазин</a>
     </nav>
     <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const slideContainer = document.querySelector('.slide-container');
-    const slides = document.querySelectorAll('.slide');
-    const prevButton = document.querySelector('.prev');
-    const nextButton = document.querySelector('.next');
-    let currentSlide = 0;
-    let startX;
-    let isDragging = false;
+// Выберите текст для анимации
+const text = "this is fucking bio";
+// Интервал между символами (в миллисекундах)
+const typingSpeed = 220;
+const deletingSpeed = 220;
 
-    function showSlide(n) {
-        currentSlide = (n + slides.length) % slides.length;
-        slideContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
-    }
+// Переменные для отслеживания состояния
+let currentIndex = 0;
+let isDeleting = false;
 
-    prevButton.addEventListener('click', () => showSlide(currentSlide - 1));
-    nextButton.addEventListener('click', () => showSlide(currentSlide + 1));
+// Функция для генерации случайного спецсимвола
+function getRandomSpecialChar() {
+  const specialChars = "!@#$%^&*()-_=+[]{};:'\"|,.<>?/";
+  return specialChars[Math.floor(Math.random() * specialChars.length)];
+}
 
-    // Touch events for swiping
-    slideContainer.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-        isDragging = true;
-    });
+// Функция для обновления заголовка вкладки
+function animateTitle() {
+  // Текущий текст с добавлением случайного спецсимвола
+  let displayedText = isDeleting
+    ? text.substring(0, currentIndex--) + getRandomSpecialChar()
+    : text.substring(0, currentIndex++) + getRandomSpecialChar();
 
-    slideContainer.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        const currentX = e.touches[0].clientX;
-        const diff = startX - currentX;
-        if (Math.abs(diff) > 50) {
-            if (diff > 0) {
-                showSlide(currentSlide + 1);
-            } else {
-                showSlide(currentSlide - 1);
-            }
-            isDragging = false;
+  // Устанавливаем заголовок вкладки
+  document.title = displayedText;
+
+  // Устанавливаем задержку для следующего шага
+  let delay = isDeleting ? deletingSpeed : typingSpeed;
+
+  // Проверяем, завершена ли анимация набора или удаления
+  if (!isDeleting && currentIndex > text.length) {
+    isDeleting = true;
+    delay = 1000; // Задержка перед началом удаления
+  } else if (isDeleting && currentIndex < 0) {
+    isDeleting = false;
+    delay = 1000; // Задержка перед началом набора
+  }
+
+  // Запускаем функцию снова с задержкой
+  setTimeout(animateTitle, delay);
+}
+
+// Запускаем анимацию
+animateTitle();
+
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const slideContainer = document.querySelector('.slide-container');
+        const slides = document.querySelectorAll('.slide');
+        const prevButton = document.querySelector('.prev');
+        const nextButton = document.querySelector('.next');
+        let currentSlide = 0;
+        let startX;
+        let isDragging = false;
+
+        function showSlide(n) {
+            currentSlide = (n + slides.length) % slides.length;
+            slideContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
         }
-    });
 
-    slideContainer.addEventListener('touchend', () => {
-        isDragging = false;
-    });
+        prevButton.addEventListener('click', () => showSlide(currentSlide - 1));
+        nextButton.addEventListener('click', () => showSlide(currentSlide + 1));
 
-    // Mouse events for swiping (desktop)
-    slideContainer.addEventListener('mousedown', (e) => {
-        startX = e.clientX;
-        isDragging = true;
-    });
+        // Touch events for swiping
+        slideContainer.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+        });
 
-    slideContainer.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        const currentX = e.clientX;
-        const diff = startX - currentX;
-        if (Math.abs(diff) > 50) {
-            if (diff > 0) {
-                showSlide(currentSlide + 1);
-            } else {
-                showSlide(currentSlide - 1);
+        slideContainer.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            const currentX = e.touches[0].clientX;
+            const diff = startX - currentX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    showSlide(currentSlide + 1);
+                } else {
+                    showSlide(currentSlide - 1);
+                }
+                isDragging = false;
             }
+        });
+
+        slideContainer.addEventListener('touchend', () => {
             isDragging = false;
-        }
-    });
+        });
 
-    slideContainer.addEventListener('mouseup', () => {
-        isDragging = false;
-    });
+        // Mouse events for swiping (desktop)
+        slideContainer.addEventListener('mousedown', (e) => {
+            startX = e.clientX;
+            isDragging = true;
+        });
 
-    slideContainer.addEventListener('mouseleave', () => {
-        isDragging = false;
-    });
+        slideContainer.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const currentX = e.clientX;
+            const diff = startX - currentX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    showSlide(currentSlide + 1);
+                } else {
+                    showSlide(currentSlide - 1);
+                }
+                isDragging = false;
+            }
+        });
 
-    showSlide(0);
-});
+        slideContainer.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        slideContainer.addEventListener('mouseleave', () => {
+            isDragging = false;
+        });
+
+        showSlide(0);
+    });
 </script>
 </body>
 </html>
