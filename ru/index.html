@@ -44,6 +44,64 @@
             text-shadow:0 0 10px #2196d1;
             font-size: 1.75rem;
          }
+
+    /* Отображение текущего выбранного языка */
+    .language-selector .selected {
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+    .language-selector .selected img {
+        width: 30px;
+        height: auto;
+    }
+
+    /* Выпадающее меню */
+    .language-selector .dropdown {
+        position: absolute;
+        top: 110%; /* Под селектором */
+        right: 10;
+        background-color: #383838;
+        border: 2px solid #999999;
+        border-radius: 10px;
+        overflow: hidden;
+        transform-origin: top;
+        transform: scaleY(0);
+        opacity: 0;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        z-index: 100;
+    }
+
+    /* Показать выпадающее меню */
+    .language-selector.active .dropdown {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+
+    /* Элементы выпадающего списка */
+    .language-selector .dropdown div {
+        padding: 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    .language-selector .dropdown div:hover {
+        background-color: #505050;
+    }
+
+    .language-selector .dropdown img {
+        width: 30px;
+        height: auto;
+    }
          .list {
             display: flex;
             align-items: center;
@@ -217,9 +275,26 @@
                 text-decoration: none;
                 font-size: 1rem;
                 padding: 10px;
+                }
+            header {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .language-selector {
+                position: fixed;
+                top: 10px;
+                left: 10px;
+                z-index: 1000;
+            }
+
+            .language-selector .dropdown {
+                width: 150px; /* Фиксированная ширина на мобильных */
+                top: 60px;
+                right: auto;
+                left: 0;
             }
         }
-
     </style>
 </head>
 <body>
@@ -228,7 +303,13 @@
     <div class="list">
         <a href="shop\shop.html">Магазин</a>
     </div> 
-    <h2>💎</h2>
+    <div class="language-selector">
+        <div class="selected"><img style="width: 30px;" src="https://i.imgur.com/qeOCKwC.png"></div>
+        <div class="dropdown">
+            <div data-lang="ru"><img style="width: 30px;" src="https://i.imgur.com/qeOCKwC.png"></div>
+            <div data-lang="en"><img style="width: 30px;" src="https://i.imgur.com/Khh4t5s.png"></div>
+        </div>
+    </div>
     </header>
     <div class="mainblock">
         <h1><span style="text-shadow:0 0 15px #2191d1a8">💎</span> n1s_01 <span style="text-shadow:0 0 15px #2191d1a8">💎</span></h1>
@@ -388,6 +469,47 @@ animateTitle();
 
         showSlide(0);
     });
-</script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const languageSelector = document.querySelector('.language-selector');
+    const selected = languageSelector.querySelector('.selected');
+    const dropdown = languageSelector.querySelector('.dropdown');
+    const options = dropdown.querySelectorAll('div');
+
+    // Открытие/закрытие меню
+    selected.addEventListener('click', () => {
+        languageSelector.classList.toggle('active');
+    });
+
+    // Обработка выбора языка
+    options.forEach(option => {
+        option.addEventListener('click', () => {
+            const lang = option.getAttribute('data-lang');
+            const imgSrc = option.querySelector('img').src;
+
+            // Изменяем текущий флаг
+            selected.querySelector('img').src = imgSrc;
+
+            // Закрываем меню
+            languageSelector.classList.remove('active');
+
+            // Переход на страницу, если выбран English
+            if (lang === 'en') {
+                setTimeout(() => {
+                    window.location.href = '../en/index.html';
+                }, 300);
+            }
+        });
+    });
+
+    // Закрытие меню при клике вне него
+    document.addEventListener('click', (e) => {
+        if (!languageSelector.contains(e.target)) {
+            languageSelector.classList.remove('active');
+        }
+    });
+});
+
+    </script>
 </body>
 </html>
+
