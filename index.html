@@ -260,6 +260,9 @@
         #preloader h2 {
             animation: pulsetext 0.75s ease infinite alternate;
         }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -267,7 +270,7 @@
         <h1>💎</h1>
         <h2>Loading...</h2>
     </div>
-    <div class="background-blur"></div>
+    <div class="background-blur hidden"></div>
 <header>
     <h1 style="filter: hue-rotate(50deg); width: 308px;">💎</h1>
     <div class="headerbuttons">
@@ -315,30 +318,52 @@
     animateTitle();
     //                                          АНИМАЦИЯ ЗАГОЛОВКА
     //                                          АНИМАЦИЯ ЗАГРУЗКИ
-    const preloader = document.getElementById('preloader');
-    const fonts = document.fonts;
+    const backgroundBlur = document.querySelector('.background-blur');
+const preloader = document.getElementById('preloader');
+const fonts = document.fonts;
 
-    function hidePreloader() {
-        preloader.classList.add('fade-out');
-        setTimeout(() => {
-            preloader.style.display = 'none';
-            document.body.style.overflow = 'auto';
-            document.querySelector('header').style.display = 'flex';
-            document.querySelector('.background-blur').style.display = 'block';
-            document.querySelector('.maincenterblock').style.display = 'flex';
-        }, 1000); // Time must match fade-out animation duration
-    }
-    function waitForFonts() {
-        return new Promise((resolve) => {
-            fonts.ready.then(resolve);
-        });
-    }
-    function minimumDelay() {
-        return new Promise((resolve) => {
-            setTimeout(resolve, 3000);
-        });
-    }
-    Promise.all([waitForFonts(), minimumDelay()]).then(hidePreloader);
+// Функция для предварительной загрузки изображения
+function preloadImage(url) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = url;
+        img.onload = () => resolve(url);
+        img.onerror = () => reject(`Failed to load image: ${url}`);
+    });
+}
+
+// Скрытие прелоадера
+function hidePreloader() {
+    preloader.classList.add('fade-out');
+    setTimeout(() => {
+        preloader.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        document.querySelector('header').style.display = 'flex';
+        backgroundBlur.classList.remove('hidden');
+        backgroundBlur.style.display = 'block';
+        document.querySelector('.maincenterblock').style.display = 'flex';
+    }, 1000); // Задержка должна соответствовать анимации fade-out
+}
+
+// Загрузка шрифтов, изображения и минимальная задержка
+function waitForResources() {
+    const imagePromise = preloadImage('https://i.imgur.com/MtTsmxY.png');
+    const fontsPromise = fonts.ready;
+    const minimumDelayPromise = new Promise((resolve) => setTimeout(resolve, 3000));
+
+    return Promise.all([imagePromise, fontsPromise, minimumDelayPromise]);
+}
+
+// Начало загрузки
+waitForResources()
+    .then(() => {
+        console.log('All resources loaded successfully');
+        hidePreloader();
+    })
+    .catch((error) => {
+        console.error(error);
+        hidePreloader(); // Убираем прелоадер даже при ошибке
+    });
         //                                          АНИМАЦИЯ ЗАГРУЗКИ
     </script>
 </body>
