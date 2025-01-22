@@ -383,10 +383,12 @@ function hidePreloader() {
         if (window.innerWidth >= 768) {
             document.querySelector('header').style.display = 'flex';
         }
+        if (window.innerWidth < 768) {
+            mobileNav.style.display = 'flex';
+        }
         backgroundBlur.classList.remove('hidden');
         backgroundBlur.style.display = 'block';
         document.querySelector('.maincenterblock').style.display = 'flex';
-        mobileNav.style.display = 'flex';
     }, 1000);
 }
 function waitForResources() {
