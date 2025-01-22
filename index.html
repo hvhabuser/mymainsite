@@ -64,12 +64,6 @@
         header a:hover svg {
             fill: #7d5bc6;
         }
-        header a:nth-child(1) {
-            background-color: #120f16;
-            color: #52627a;
-            opacity: 0;
-            animation: slidedown 1s 0.1s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;
-        }
         header a:nth-child(1):hover {
             background-color: #251d2e;
             color: #7d5bc6;
@@ -107,6 +101,16 @@
         @keyframes slidedown {
             0% {
                 transform: translateY(-50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0px);
+                opacity: 1;
+            }
+        }
+        @keyframes slideup {
+            0% {
+                transform: translateY(50px);
                 opacity: 0;
             }
             100% {
@@ -263,6 +267,42 @@
         .hidden {
             display: none;
         }
+        .mobile-nav {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            header {
+                display: none;
+            }
+            .maincenterblock h1 {
+                font-size: 40px;
+            }
+            .maincenterblock h5 {
+                font-size: 12px;
+            }
+            .maincenterblockbuttons {
+                flex-direction: column;
+            }
+            .mobile-nav {
+                display: none;
+                justify-content: space-around;
+                align-items: center;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                backdrop-filter: blur(10px);
+                padding: 10px 0;
+                border-radius: 15px;
+                border-top: 2px solid rgb(255, 255, 255);
+                z-index: 1000;
+            }
+            .mobile-nav a {
+                text-decoration: none;
+                font-size: 1rem;
+                padding: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -274,7 +314,7 @@
 <header>
     <h1 style="filter: hue-rotate(50deg); width: 308px;">💎</h1>
     <div class="headerbuttons">
-        <a href="/"><svg xmlns="http://www.w3.org/2000/svg" height="1rem" viewBox="0 -960 960 960" width="24px"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>Home</a>
+        <a href="/" style="background-color: #120f16; color: #52627a; opacity: 0; animation: slidedown 1s 0.1s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" height="1rem" viewBox="0 -960 960 960" width="24px"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>Home</a>
         <a href="shop.html" style="opacity: 0; animation: slidedown 1s 0.2s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" height="1rem" viewBox="0 -960 960 960" width="24px"><path d="M160-720v-80h640v80H160Zm0 560v-240h-40v-80l40-200h640l40 200v80h-40v240h-80v-240H560v240H160Zm80-80h240v-160H240v160Zm-38-240h556-556Zm0 0h556l-24-120H226l-24 120Z"/></svg>Shop</a>
         <a href="https://t.me/cshvh" style="opacity: 0; animation: slidedown 1s 0.3s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="1rem"><path d="M2 3l20 9-20 9 5-9-5-9zm2.5 9l3.5 1.5L20 12 8 10.5 4.5 12z"/></svg>Telegram</a>
     </div>
@@ -287,6 +327,11 @@
         <a class="maincenterblockbuttons-c"> Contact <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z"/></svg></a>
     </div>
 </div>
+<nav class="mobile-nav">
+    <a href="shop.html" style="opacity: 0; animation: slideup 1s 0.3s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" fill="#5e6278" height="1rem" viewBox="0 -960 960 960" width="24px"><path d="M160-720v-80h640v80H160Zm0 560v-240h-40v-80l40-200h640l40 200v80h-40v240h-80v-240H560v240H160Zm80-80h240v-160H240v160Zm-38-240h556-556Zm0 0h556l-24-120H226l-24 120Z"/></svg>Shop</a>
+    <a href="/" style=" border-radius: 10px; background-color: #120f16; color: #52627a; opacity: 0; animation: slideup 1s 0.1s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" fill="#5e6278" height="1rem" viewBox="0 -960 960 960" width="24px"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>Home</a>
+    <a href="https://t.me/cshvh" style="opacity: 0; animation: slideup 1s 0.3s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#5e6278" height="1rem"><path d="M2 3l20 9-20 9 5-9-5-9zm2.5 9l3.5 1.5L20 12 8 10.5 4.5 12z"/></svg>Telegram</a>
+</nav>
 
 
     <script>
@@ -318,11 +363,10 @@
     animateTitle();
     //                                          АНИМАЦИЯ ЗАГОЛОВКА
     //                                          АНИМАЦИЯ ЗАГРУЗКИ
-    const backgroundBlur = document.querySelector('.background-blur');
+const backgroundBlur = document.querySelector('.background-blur');
 const preloader = document.getElementById('preloader');
 const fonts = document.fonts;
-
-// Функция для предварительной загрузки изображения
+const mobileNav = document.querySelector('.mobile-nav');
 function preloadImage(url) {
     return new Promise((resolve, reject) => {
         const img = new Image();
@@ -331,21 +375,20 @@ function preloadImage(url) {
         img.onerror = () => reject(`Failed to load image: ${url}`);
     });
 }
-
-// Скрытие прелоадера
 function hidePreloader() {
     preloader.classList.add('fade-out');
     setTimeout(() => {
         preloader.style.display = 'none';
         document.body.style.overflow = 'auto';
-        document.querySelector('header').style.display = 'flex';
+        if (window.innerWidth >= 768) {
+            document.querySelector('header').style.display = 'flex';
+        }
         backgroundBlur.classList.remove('hidden');
         backgroundBlur.style.display = 'block';
         document.querySelector('.maincenterblock').style.display = 'flex';
-    }, 1000); // Задержка должна соответствовать анимации fade-out
+        mobileNav.style.display = 'flex';
+    }, 1000);
 }
-
-// Загрузка шрифтов, изображения и минимальная задержка
 function waitForResources() {
     const imagePromise = preloadImage('https://i.imgur.com/MtTsmxY.png');
     const fontsPromise = fonts.ready;
@@ -353,8 +396,6 @@ function waitForResources() {
 
     return Promise.all([imagePromise, fontsPromise, minimumDelayPromise]);
 }
-
-// Начало загрузки
 waitForResources()
     .then(() => {
         console.log('All resources loaded successfully');
@@ -362,7 +403,7 @@ waitForResources()
     })
     .catch((error) => {
         console.error(error);
-        hidePreloader(); // Убираем прелоадер даже при ошибке
+        hidePreloader();
     });
         //                                          АНИМАЦИЯ ЗАГРУЗКИ
     </script>
