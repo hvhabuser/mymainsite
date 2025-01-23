@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://i.imgur.com/3TzKupb.png">
     <style>
         * {
             margin: 0;
@@ -69,6 +70,7 @@
             background-color: #251d2e;
             color: #7d5bc6;
         }
+        
         @keyframes pulse {
             0% {
                 text-shadow: 0 -2.5px 15px #21cfffcc;
@@ -261,8 +263,10 @@
             filter: hue-rotate(50deg);
             text-shadow: 0 -2.5px 15px rgba(33, 207, 255, 0.8);
             animation: pulse 0.3s ease infinite alternate;
+            will-change: scale, text-shadow;
         }
         #preloader h2 {
+            will-change: scale, text-shadow;
             animation: pulsetext 0.75s ease infinite alternate;
         }
         .hidden {
@@ -309,12 +313,12 @@
                 filter: hue-rotate(50deg);
                 text-shadow: 0 -2.5px 15px rgba(33, 207, 255, 0.8);
                 animation: pulse 0.3s ease infinite alternate;
-                will-change: transform, opacity;
+                will-change: scale, text-shadow;
             }
             #preloader h2 {
                 font-size: 15px;
                 animation: pulsetext 0.75s ease infinite alternate;
-                will-change: transform, opacity;
+                will-change: scale, text-shadow;
             }
         }
     </style>
@@ -328,7 +332,7 @@
 <header>
     <h1 style="filter: hue-rotate(50deg); width: 308px;">💎</h1>
     <div class="headerbuttons">
-        <a href="/" style="background-color: #120f16; color: #52627a; opacity: 0; animation: slidedown 1s 0.1s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" height="1rem" viewBox="0 -960 960 960" width="24px"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>Home</a>
+        <a href="/" style="background-color: #120f16; color: #52627a; opacity: 0; transition: 0.3s all; animation: slidedown 1s 0.1s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" height="1rem" viewBox="0 -960 960 960" width="24px"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>Home</a>
         <a href="/shop" style="opacity: 0; animation: slidedown 1s 0.2s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" height="1rem" viewBox="0 -960 960 960" width="24px"><path d="M160-720v-80h640v80H160Zm0 560v-240h-40v-80l40-200h640l40 200v80h-40v240h-80v-240H560v240H160Zm80-80h240v-160H240v160Zm-38-240h556-556Zm0 0h556l-24-120H226l-24 120Z"/></svg>Shop</a>
         <a href="https://t.me/cshvh" style="opacity: 0; animation: slidedown 1s 0.3s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="1rem"><path d="M2 3l20 9-20 9 5-9-5-9zm2.5 9l3.5 1.5L20 12 8 10.5 4.5 12z"/></svg>Telegram</a>
     </div>
@@ -337,7 +341,7 @@
     <h1> You can be better </h1>
     <h5> Find out about all the services you need that I can provide. <br> Only the most necessary things and only the best offers.</h5>
     <div class="maincenterblockbuttons">
-        <a class="maincenterblockbuttons-lm" aria-label="Read More">Read More <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z"/></svg></a>
+        <a href="/shop" class="maincenterblockbuttons-lm" aria-label="Shop">Shop <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z"/></svg></a>
         <a class="maincenterblockbuttons-c" aria-label="Contact Us">Contact<svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z"/></svg></a>
     </div>
 </div>
@@ -348,7 +352,7 @@
 </nav>
 
 
-    <script>
+<script>
     //                                          АНИМАЦИЯ ЗАГОЛОВКА
     const text = "fucking bio";
     const typingSpeed = 220;
