@@ -1,0 +1,5 @@
+RewriteEngine on 
+RewriteBase / 
+RewriteCond %{REQUEST_URI} !^.*\..*$ 
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}\.html -f 
+RewriteRule ^(.*)$ $1.html [L]
