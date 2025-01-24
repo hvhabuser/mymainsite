@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
     <link rel="icon" href="https://i.imgur.com/3TzKupb.png">
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <style>
         * {
             margin: 0;
@@ -411,44 +412,22 @@ function hidePreloader() {
         mainCenterBlock.style.display = 'flex';
     }, 1000);
 }
-function checkCaptcha() {
-            const turnstileResponse = document.querySelector('textarea[name="cf-turnstile-response"]').value;
-            if (!turnstileResponse) {
-                alert('Please complete the CAPTCHA.');
-                return false;
-            }
-            // Отправка на сервер для проверки (примерный запрос)
-            fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    secret: '0x4AAAAAAA6JehfBhsj0BLid9prIUQWYaAg',
-                    response: turnstileResponse
-                })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        hidePreloader();
-                    } else {
-                        alert('CAPTCHA verification failed.');
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-            return true;
-        }
+function waitForResources() {
+    const imagePromise = preloadImage('https://i.imgur.com/MtTsmxY.png');
+    const fontsPromise = fonts.ready;
+    const minimumDelayPromise = new Promise((resolve) => setTimeout(resolve, 2000));
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const turnstileInterval = setInterval(() => {
-                const turnstileResponse = document.querySelector('textarea[name="cf-turnstile-response"]');
-                if (turnstileResponse && turnstileResponse.value) {
-                    clearInterval(turnstileInterval);
-                    checkCaptcha();
-                }
-            }, 1000);
-        });
+    return Promise.all([imagePromise, fontsPromise, minimumDelayPromise]);
+}
+waitForResources()
+    .then(() => {
+        console.log('All resources loaded successfully');
+        hidePreloader();
+    })
+    .catch((error) => {
+        console.error(error);
+        hidePreloader();
+    });
 //                                          АНИМАЦИЯ ЗАГРУЗКИ
     </script>
 </body>
