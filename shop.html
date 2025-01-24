@@ -6,7 +6,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
-    <link rel="icon" href="https://i.imgur.com/3TzKupb.png">
+    <link rel="icon" href="https://i.imgur.com/3TzKupb.png">\
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <style>
         * {
             margin: 0;
@@ -191,6 +192,9 @@
         .mobile-nav {
             display: none;
         }
+        .cf-turnstile {
+            margin-top: 3vh;
+        }
         @media (max-width: 768px) {
             header {
                 display: none;
@@ -233,7 +237,8 @@
 <body>
     <div id="preloader">
         <h1>💎</h1>
-        <h2>Loading...</h2>
+        <h2>Checking your session...</h2>
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAAA6JekcS2HFme2oy"></div>
     </div>
     <div class="background-blur hidden"></div>
 <header>
@@ -250,9 +255,9 @@
     <a href="/" style=" border-radius: 10px; background-color: #120f16; color: #52627a; opacity: 0; animation: slideup 1s 0.1s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" fill="#5e6278" height="1rem" viewBox="0 -960 960 960" width="24px"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>Home</a>
     <a href="https://t.me/cshvh" style="opacity: 0; animation: slideup 1s 0.3s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#5e6278" height="1rem"><path d="M2 3l20 9-20 9 5-9-5-9zm2.5 9l3.5 1.5L20 12 8 10.5 4.5 12z"/></svg>Telegram</a>
 </nav>
-    <script>
+<script>
     //                                          АНИМАЦИЯ ЗАГОЛОВКА
-    const text = "dirty shop";
+    const text = "fucking bio";
     const typingSpeed = 220;
     const deletingSpeed = 220;
     let currentIndex = 0;
@@ -279,12 +284,13 @@
     animateTitle();
 //                                          АНИМАЦИЯ ЗАГОЛОВКА
 //                                          АНИМАЦИЯ ЗАГРУЗКИ
-    const backgroundBlur = document.querySelector('.background-blur');
+const backgroundBlur = document.querySelector('.background-blur');
     const preloader = document.getElementById('preloader');
     const fonts = document.fonts;
     const mobileNav = document.querySelector('.mobile-nav');
     const header = document.querySelector('header');
     const mainCenterBlock = document.querySelector('.maincenterblock');
+    let isCaptchaVerified = false;
     function preloadImage(url) {
         return new Promise((resolve, reject) => {
             const img = new Image();
@@ -294,26 +300,32 @@
         });
     }
     function hidePreloader() {
-        preloader.classList.add('fade-out');
-        setTimeout(() => {
-            preloader.style.display = 'none';
-            document.body.style.overflow = 'auto';
-            if (window.innerWidth >= 768) {
-                header.style.display = 'flex';
-            } else {
-                mobileNav.style.display = 'flex';
-            }
-            backgroundBlur.classList.remove('hidden');
-            backgroundBlur.style.display = 'block';
-            mainCenterBlock.style.display = 'flex';
-        }, 1000);
+        if (isCaptchaVerified) {
+            preloader.classList.add('fade-out');
+            setTimeout(() => {
+                preloader.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                if (window.innerWidth >= 768) {
+                    header.style.display = 'flex';
+                } else {
+                    mobileNav.style.display = 'flex';
+                }
+                backgroundBlur.classList.remove('hidden');
+                backgroundBlur.style.display = 'block';
+                mainCenterBlock.style.display = 'flex';
+            }, 1000);
+        }
     }
     function waitForResources() {
         const imagePromise = preloadImage('https://i.imgur.com/MtTsmxY.png');
         const fontsPromise = fonts.ready;
         const minimumDelayPromise = new Promise((resolve) => setTimeout(resolve, 2000));
-
         return Promise.all([imagePromise, fontsPromise, minimumDelayPromise]);
+    }
+    function onCaptchaSuccess() {
+        console.log('CAPTCHA verified successfully');
+        isCaptchaVerified = true;
+        hidePreloader();
     }
     waitForResources()
         .then(() => {
@@ -324,6 +336,8 @@
             console.error(error);
             hidePreloader();
         });
+    const captchaDiv = document.querySelector('.cf-turnstile');
+    captchaDiv.setAttribute('data-callback', 'onCaptchaSuccess');
 //                                          АНИМАЦИЯ ЗАГРУЗКИ
     </script>
 </body>

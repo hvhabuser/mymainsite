@@ -267,6 +267,7 @@
             will-change: scale, text-shadow;
         }
         #preloader h2 {
+            margin-top: 0.5vh;
             will-change: scale, text-shadow;
             animation: pulsetext 0.75s ease infinite alternate;
         }
@@ -275,6 +276,9 @@
         }
         .mobile-nav {
             display: none;
+        }
+        .cf-turnstile {
+            margin-top: 3vh;
         }
         @media (max-width: 768px) {
             header {
@@ -327,7 +331,7 @@
 <body>
     <div id="preloader">
         <h1>💎</h1>
-        <h2>Loading...</h2>
+        <h2>Checking your session...</h2>
         <div class="cf-turnstile" data-sitekey="0x4AAAAAAA6JekcS2HFme2oy"></div>
     </div>
     <div class="background-blur hidden"></div>
@@ -389,8 +393,7 @@ const backgroundBlur = document.querySelector('.background-blur');
     const mobileNav = document.querySelector('.mobile-nav');
     const header = document.querySelector('header');
     const mainCenterBlock = document.querySelector('.maincenterblock');
-    let isCaptchaVerified = false; // Variable to track CAPTCHA status
-
+    let isCaptchaVerified = false;
     function preloadImage(url) {
         return new Promise((resolve, reject) => {
             const img = new Image();
@@ -399,7 +402,6 @@ const backgroundBlur = document.querySelector('.background-blur');
             img.onerror = () => reject(`Failed to load image: ${url}`);
         });
     }
-
     function hidePreloader() {
         if (isCaptchaVerified) {
             preloader.classList.add('fade-out');
@@ -417,34 +419,26 @@ const backgroundBlur = document.querySelector('.background-blur');
             }, 1000);
         }
     }
-
     function waitForResources() {
         const imagePromise = preloadImage('https://i.imgur.com/MtTsmxY.png');
         const fontsPromise = fonts.ready;
         const minimumDelayPromise = new Promise((resolve) => setTimeout(resolve, 2000));
-
         return Promise.all([imagePromise, fontsPromise, minimumDelayPromise]);
     }
-
-    // CAPTCHA callback function
     function onCaptchaSuccess() {
         console.log('CAPTCHA verified successfully');
         isCaptchaVerified = true;
-        hidePreloader(); // Attempt to hide preloader once CAPTCHA is verified
+        hidePreloader();
     }
-
-    // Initialize resources loading and setup CAPTCHA callback
     waitForResources()
         .then(() => {
             console.log('All resources loaded successfully');
-            hidePreloader(); // Attempt to hide preloader after resources load
+            hidePreloader();
         })
         .catch((error) => {
             console.error(error);
             hidePreloader();
         });
-
-    // Inject Turnstile CAPTCHA with callback
     const captchaDiv = document.querySelector('.cf-turnstile');
     captchaDiv.setAttribute('data-callback', 'onCaptchaSuccess');
 //                                          АНИМАЦИЯ ЗАГРУЗКИ
