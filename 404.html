@@ -336,13 +336,12 @@
     animateTitle();
 //                                          АНИМАЦИЯ ЗАГОЛОВКА
 //                                          АНИМАЦИЯ ЗАГРУЗКИ
-const backgroundBlur = document.querySelector('.background-blur');
+    const backgroundBlur = document.querySelector('.background-blur');
     const preloader = document.getElementById('preloader');
     const fonts = document.fonts;
     const mobileNav = document.querySelector('.mobile-nav');
-    const header = document.querySelector('header');
-    const mainCenterBlock = document.querySelector('.maincenterblock');
-    let isCaptchaVerified = false;
+    const mainerrorblock = document.querySelector('.mainerrorblock');
+    let isCaptchaVerified = true;
     function preloadImage(url) {
         return new Promise((resolve, reject) => {
             const img = new Image();
@@ -358,13 +357,11 @@ const backgroundBlur = document.querySelector('.background-blur');
                 preloader.style.display = 'none';
                 document.body.style.overflow = 'auto';
                 if (window.innerWidth >= 768) {
-                    header.style.display = 'flex';
-                } else {
                     mobileNav.style.display = 'flex';
                 }
                 backgroundBlur.classList.remove('hidden');
                 backgroundBlur.style.display = 'block';
-                mainCenterBlock.style.display = 'flex';
+                mainerrorblock.style.display = 'flex';
             }, 1000);
         }
     }
