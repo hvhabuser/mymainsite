@@ -193,9 +193,55 @@
             justify-content: center;
             align-items: center;
             display: flex;
-            height: 80vh;
+            height: 100vh;
             flex-direction: column;
             animation: opacity 0.5s forwards;
+        }
+        .mainerrorblock h1 {
+            font-family: "Open Sans";
+            font-size: 60px;
+            text-align: center;
+        }
+        .mainerrorblock h5 {
+            font-size: 14px;
+            font-family: "Inter";
+            letter-spacing: 1.3px;
+            text-align: center;
+            color: #bdbdbd;
+            font-weight: 350;
+        }
+        .backbutton {
+            margin-top: 2.25vh;
+            border: 2px solid #5e6278;
+            border-radius: 13.32px;
+            padding: 7px 20px;
+            display: flex;
+            color: #5e6278;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .backbutton svg {
+            fill: #5e6278;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            align-self: center;
+            margin-left: 0.33vh;
+            transition: all 0.3s, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            will-change: transform;
+        }
+        .backbutton:hover {
+            color: #7d5bc6;
+            background-color: #2d243b;
+        }
+        .backbutton:hover svg {
+            fill: #7d5bc6;
+            transform: translateX(10px);
         }
         @media (max-width: 768px) {
             header {
@@ -245,16 +291,11 @@
         <h2>Loading...</h2>
     </div>
     <div class="background-blur hidden"></div>
-<header>
-    <h1 style="filter: hue-rotate(50deg); width: 308px;">💎</h1>
-    <div class="headerbuttons">
-        <a href="/" style="background-color: #120f16; color: #52627a; opacity: 0; animation: slidedown 1s 0.1s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" height="1rem" viewBox="0 -960 960 960" width="24px"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>Home</a>
-        <a href="/shop" style="opacity: 0; animation: slidedown 1s 0.2s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" height="1rem" viewBox="0 -960 960 960" width="24px"><path d="M160-720v-80h640v80H160Zm0 560v-240h-40v-80l40-200h640l40 200v80h-40v240h-80v-240H560v240H160Zm80-80h240v-160H240v160Zm-38-240h556-556Zm0 0h556l-24-120H226l-24 120Z"/></svg>Shop</a>
-        <a href="https://t.me/cshvh" style="opacity: 0; animation: slidedown 1s 0.3s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="1rem"><path d="M2 3l20 9-20 9 5-9-5-9zm2.5 9l3.5 1.5L20 12 8 10.5 4.5 12z"/></svg>Telegram</a>
-    </div>
-</header>
 <div class="mainerrorblock">
-    <h1>404 ERROR</h1>
+    <h1>404 PAGE NOT FOUND</h1>
+    <h5> По-моему, такой страницы не существует, проверь исправность ссылки</h5>
+    <h5> Вернись на предыдующую вкладку или нажми на кнопку ниже </h5>
+    <a href="/" class="backbutton"> На главную <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z"/></svg></a>
 </div>
 <nav class="mobile-nav">
     <a href="/shop" style="opacity: 0; animation: slideup 1s 0.3s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" fill="#5e6278" height="1rem" viewBox="0 -960 960 960" width="24px"><path d="M160-720v-80h640v80H160Zm0 560v-240h-40v-80l40-200h640l40 200v80h-40v240h-80v-240H560v240H160Zm80-80h240v-160H240v160Zm-38-240h556-556Zm0 0h556l-24-120H226l-24 120Z"/></svg>Shop</a>
@@ -294,7 +335,6 @@
     const preloader = document.getElementById('preloader');
     const fonts = document.fonts;
     const mobileNav = document.querySelector('.mobile-nav');
-    const header = document.querySelector('header');
     const mainerrorblock = document.querySelector('.mainerrorblock');
     function preloadImage(url) {
         return new Promise((resolve, reject) => {
@@ -308,9 +348,7 @@
         setTimeout(() => {
             preloader.style.display = 'none';
             document.body.style.overflow = 'auto';
-            if (window.innerWidth >= 768) {
-                header.style.display = 'flex';
-            } else {
+            if (window.innerWidth < 768) {
                 mobileNav.style.display = 'flex';
             }
             backgroundBlur.classList.remove('hidden');
