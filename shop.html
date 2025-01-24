@@ -252,7 +252,7 @@
 </nav>
     <script>
     //                                          АНИМАЦИЯ ЗАГОЛОВКА
-    const text = "fucking bio";
+    const text = "dirty shop";
     const typingSpeed = 220;
     const deletingSpeed = 220;
     let currentIndex = 0;
@@ -313,7 +313,7 @@
     function waitForResources() {
         const imagePromise = preloadImage('https://i.imgur.com/MtTsmxY.png');
         const fontsPromise = fonts.ready;
-        const minimumDelayPromise = new Promise((resolve) => setTimeout(resolve, 3000));
+        const minimumDelayPromise = new Promise((resolve) => setTimeout(resolve, 1000));
 
         return Promise.all([imagePromise, fontsPromise, minimumDelayPromise]);
     }
