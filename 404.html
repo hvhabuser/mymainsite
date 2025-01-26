@@ -310,8 +310,8 @@
     <script>
     //                                          АНИМАЦИЯ ЗАГОЛОВКА
     const text = "fucking bio";
-    const typingSpeed = 220;
-    const deletingSpeed = 220;
+    const typingSpeed = 210;
+    const deletingSpeed = 210;
     let currentIndex = 0;
     let isDeleting = false;
     function getRandomSpecialChar() {
@@ -326,10 +326,10 @@
     let delay = isDeleting ? deletingSpeed : typingSpeed;
     if (!isDeleting && currentIndex > text.length) {
         isDeleting = true;
-        delay = 1000;
+        delay = 2000;
     } else if (isDeleting && currentIndex < 0) {
         isDeleting = false;
-        delay = 1000;
+        delay = 500;
     }
     setTimeout(animateTitle, delay);
     }
@@ -341,7 +341,7 @@
     const fonts = document.fonts;
     const mobileNav = document.querySelector('.mobile-nav');
     const mainerrorblock = document.querySelector('.mainerrorblock');
-    let isCaptchaVerified = true;
+    let isCaptchaVerified = false;
     function preloadImage(url) {
         return new Promise((resolve, reject) => {
             const img = new Image();
